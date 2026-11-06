@@ -2375,7 +2375,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheets()});
 // ---------- start ----------
 (function start(){
   const h=(location.hash||'').slice(1);state.month=today().slice(0,7);
-  if(['today','trips','totals','pay','check','fixed','customers','drivers'].includes(h))selectTab(h);else selectTab('today');
+  if(['today','trips','totals','pay','check','fixed','customers','drivers'].includes(h))selectTab(h);else selectTab('trips');
   render();
   if(!window.claude||!claude.use){setSync('Open this page in Claude to load your saved trips.',true);return}
   claude.use('db').then(async db=>{
