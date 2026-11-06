@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ibrahim Taxi</title>
+<title>Vahid Sharahuddin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
@@ -306,7 +306,7 @@ main,section{padding-bottom:70px}.fab{bottom:calc(76px + env(safe-area-inset-bot
 <body>
 <div class="wrap">
   <header>
-    <div class="brand">🚕 Ibrahim Taxi</div>
+    <div class="brand">🚕 Vahid Sharahuddin</div>
     <div class="hrow">
       <div class="month">
         <button id="prevM" aria-label="Previous month">‹</button>
@@ -2270,7 +2270,7 @@ state.hideTot=true;try{state.hideTot=localStorage.getItem('hideTot')!=='0'}catch
 function syncTotEye(){$('#v-totals').classList.toggle('hidenums',state.hideTot);const open='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>';const closed='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10c2.5 3 6 5 10 5s7.5-2 10-5"/><path d="M5 13.5 3 16M9.5 15 8.5 18M14.5 15l1 3M19 13.5l2 2.5"/></svg>';$('#totEye').innerHTML=state.hideTot?closed:open;$('#totEye').title=state.hideTot?'Show numbers':'Hide numbers'}
 $('#totEye').onclick=()=>{state.hideTot=!state.hideTot;try{localStorage.setItem('hideTot',state.hideTot?'1':'0')}catch(_){}syncTotEye()};syncTotEye();
 async function readAllDocs(col){const out={};const snap=await state.db.collection(col).limit(1000).get();snap.docs.forEach(d=>out[d.id]=d.data());return out}
-async function collectBackup(){const data={app:'Ibrahim Taxi',app_link:APP_URL,backup_date:today(),collections:{}};
+async function collectBackup(){const data={app:'Vahid Sharahuddin',app_link:APP_URL,backup_date:today(),collections:{}};
   for(const c of ['days','payments','settles'])data.collections[c]=await readAllDocs(c);
   data.collections.config={};for(const k of ['customers','drivers','routes','schedules']){const d=await state.db.doc('config/'+k).get();if(d.exists)data.collections.config[k]=d.data()}
   return data}
@@ -2282,7 +2282,7 @@ function backupXlsx(data){const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(cu),'Customers');
   const dr=[['Name','Plate','Phone','Car','Civil ID','Code']];((data.collections.config.drivers||{}).list||[]).forEach(d=>dr.push([d.name,d.plate||'',d.phone||'',d.car||'',d.civilId||'',d.token||'']));
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(dr),'Drivers');
-  const js=JSON.stringify(data);const ch=[['Ibrahim Taxi backup – do not edit this sheet']];for(let k=0;k<js.length;k+=30000)ch.push([js.slice(k,k+30000)]);
+  const js=JSON.stringify(data);const ch=[['Vahid Sharahuddin backup – do not edit this sheet']];for(let k=0;k<js.length;k+=30000)ch.push([js.slice(k,k+30000)]);
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ch),'_backup');return XLSX.write(wb,{bookType:'xlsx',type:'array'})}
 $('#bkBtn').onclick=()=>{$('#bkDlg').classList.add('open')};
 $('#bkNo').onclick=()=>$('#bkDlg').classList.remove('open');
@@ -2301,7 +2301,7 @@ $('#rsBtn').onclick=()=>{$('#rsDlg').classList.add('open')};
 $('#rsNo').onclick=()=>$('#rsDlg').classList.remove('open');
 $('#rsFile').onclick=()=>{$('#rsDlg').classList.remove('open');$('#rsIn').click()};
 $('#rsPasteGo').onclick=async()=>{const t=$('#rsPaste').value.trim();$('#rsDlg').classList.remove('open');if(!t)return;await doRestore(t)};
-async function getAppSrc(){let src='';try{const r=await fetch(location.href.split('#')[0],{cache:'no-store'});const t=await r.text();if(/Ibrahim Taxi/.test(t)&&t.length>50000)src=t}catch(_){}return src||APP_SRC_SNAPSHOT}
+async function getAppSrc(){let src='';try{const r=await fetch(location.href.split('#')[0],{cache:'no-store'});const t=await r.text();if(/Vahid Sharahuddin/.test(t)&&t.length>50000)src=t}catch(_){}return src||APP_SRC_SNAPSHOT}
 $('#cdNo').onclick=()=>$('#cdDlg').classList.remove('open');
 document.addEventListener('click',async e=>{const o=e.target.closest('[data-cdfmt]');if(!o)return;const fmt=o.dataset.cdfmt;$('#cdDlg').classList.remove('open');
   try{const src=await getAppSrc();const base=`IbrahimTaxi_app_code_${today()}`;
@@ -2310,7 +2310,7 @@ document.addEventListener('click',async e=>{const o=e.target.closest('[data-cdfm
     if(fmt==='html')await dl.save({filename:base+'.html',data:new Blob([src],{type:'text/html'})});
     if(fmt==='txt')await dl.save({filename:base+'.txt',data:new Blob([src],{type:'text/plain'})});
     toast('App code saved')}catch(err){if(err&&err.code!=='declined')toast('Could not save the app code')}});
-async function doRestore(text){try{const data=JSON.parse(text);const C=data.collections||{};if(!C.days||!C.config){toast('This is not a Ibrahim Taxi backup');return}
+async function doRestore(text){try{const data=JSON.parse(text);const C=data.collections||{};if(!C.days||!C.config){toast('This is not a Vahid Sharahuddin backup');return}
     const nd=Object.keys(C.days).length;
     if(!(await askConfirm(`Restore backup from ${data.backup_date||'?'}? It will put back ${nd} days of rides and all customers, drivers and settings. Rides added after that date stay, but days in the backup are replaced.`,'Restore')))return;
     toast('Restoring…');
